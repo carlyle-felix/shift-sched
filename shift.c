@@ -3,15 +3,25 @@
 
 // function prototypes
 int get_day_of_year(int day, int month, int year, int calendar[], int *year_total);
+void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[]);
 
 int main(void) {
 
     int calendar[12] = {31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; 
-    int day, month, year, ref_year, year_total, ref_year_total, days_since_ref, ref_day_of_year, sched;
+    int day, month, year, year_total, day_of_year;
 
     printf("Enter first day shift of current cycle (dd/mm/yy): ");
-    scanf("%d/%d/%d", &day, &month, &ref_year);
-    ref_day_of_year = get_day_of_year(day, month, ref_year, calendar, &ref_year_total);
+    scanf("%d/%d/%d", &day, &month, &year);
+    day_of_year = get_day_of_year(day, month, year, calendar, &year_total);
+
+    check_date(year, day_of_year, year_total, calendar);
+    
+    return 0;
+}
+
+void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[]) {
+
+    int day, month, year, year_total, days_since_ref, sched;
 
     printf("Enter a future date:    ");
     scanf("%d/%d/%d", &day, &month, &year);
@@ -41,8 +51,6 @@ int main(void) {
         case 7:     printf("forth off day");
                     break;
     }
-
-    return 0;
 }
 
 // find number of days since the first day of the year
