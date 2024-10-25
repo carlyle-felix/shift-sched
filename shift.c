@@ -1,6 +1,6 @@
 /***********************************************************************************************************
  * Track continental shift pattern:    Use a given date as a reference to display schedule for given dates *
- *                                   or display a monthly calendar populated with shift pattern.           *                       
+ *                                     or display a monthly calendar populated with shift pattern.         *                       
  * Author:  Carlyle Felix                                                                                  *
  ***********************************************************************************************************/
 
