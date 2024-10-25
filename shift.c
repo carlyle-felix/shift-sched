@@ -1,3 +1,9 @@
+/***********************************************************************************************************
+ * Track continental shift pattern:    Use a given date as a reference to display schedule for given dates *
+ *                                   or display a monthly calendar populated with shift pattern.           *                       
+ * Author:  Carlyle Felix                                                                                  *
+ ***********************************************************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -13,6 +19,7 @@ int main(void) {
     int day, month, year, year_total, day_of_year, day_of_week;
     char c, choice;
 
+    // get reference date
     printf("Enter first day shift of current cycle (dd/mm/yy): ");
     scanf("%d/%d/%d", &day, &month, &year);
     printf("Enter day of week for first day shift (Sun: 1 — Sat: 7): ");
@@ -31,6 +38,7 @@ int main(void) {
     return 0;
 }
 
+// display monthly calendar for a given month populated with shift pattern
 void view_month(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[], int ref_day_of_week) {
 
     int i, day = 1, month, year, year_total, days_since_ref, sched, day_of_week;
@@ -85,6 +93,7 @@ void view_month(int ref_year, int ref_day_of_year, int ref_year_total, int calen
     
 }
 
+// display shift schedule for a given date
 void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[], int ref_day_of_week) {
 
     int day, month, year, year_total, days_since_ref, sched, day_of_week;
