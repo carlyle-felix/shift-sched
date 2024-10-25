@@ -34,11 +34,12 @@ int main(void) {
 void view_month(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[], int ref_day_of_week) {
 
     int i, day = 1, month, year, year_total, days_since_ref, sched, day_of_week;
-    char shift_pattern[8] = {'D', 'D', 'N', 'N', 'O', 'O', 'O', 'O'};
+    char c, shift_pattern[8] = {'D', 'D', 'N', 'N', 'O', 'O', 'O', 'O'};
     
     printf("Enter future month(mm/yy): ");
     scanf("%d/%d", &month, &year);
 
+    for (;;) {
     if (ref_year == year) {
         days_since_ref = get_day_of_year(day, month, year, calendar, &year_total) - ref_day_of_year;
     } else {
@@ -64,6 +65,23 @@ void view_month(int ref_year, int ref_day_of_year, int ref_year_total, int calen
         }
     }
 
+        printf("\nView following month, Return or Quit?\n(V/R/Q): ");
+        while ((c = toupper(getchar())) != 'V' && c != 'R' && c != 'Q');
+
+        if (c == 'V') {
+            if (month < 12) {
+                month++;
+            } else {
+                year++;
+                month = 1;
+            }
+            continue;
+        } 
+        else if (c == 'R')  break;
+        else if (c == 'Q')  exit(EXIT_SUCCESS);
+    
+    }
+    
 }
 
 void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[]) {
