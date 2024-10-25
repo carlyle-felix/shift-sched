@@ -49,7 +49,8 @@ void view_month(int ref_year, int ref_day_of_year, int ref_year_total, int calen
     
     day_of_week = (days_since_ref - ref_day_of_week) % 7;
 
-    printf("\n Sun   Mon   Tue   Wed   Thu   Fri   Sat\n");
+        printf("\n%d/%d\n", month, year);
+        printf(" Sun   Mon   Tue   Wed   Thu   Fri   Sat\n");
     for (i = 0; i < calendar[month - 1] + day_of_week; i++) {
         if (i < day_of_week) {
             printf("      ");
