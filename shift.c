@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 // function prototypes
 int get_day_of_year(int day, int month, int year, int calendar[], int *year_total);
@@ -9,13 +10,19 @@ int main(void) {
 
     int calendar[12] = {31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; 
     int day, month, year, year_total, day_of_year;
-
+    char c, choice;
     printf("Enter first day shift of current cycle (dd/mm/yy): ");
     scanf("%d/%d/%d", &day, &month, &year);
     day_of_year = get_day_of_year(day, month, year, calendar, &year_total);
-
-    check_date(year, day_of_year, year_total, calendar);
     
+    for (;;) {
+        check_date(year, day_of_year, year_total, calendar);
+        
+        printf("\nCheck another date or Quit?\n(C/Q): ");
+        while ((c = toupper(getchar())) != 'C' && c != 'Q');
+        if (c == 'C')   continue;
+        if (c == 'Q')   break;
+    }
     return 0;
 }
 
@@ -34,21 +41,21 @@ void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calen
     
     sched = days_since_ref % 8;
     switch (sched) {
-        case 0:     printf("First day shift\n");
+        case 0:     printf("\nFirst day shift\n");
                     break;
-        case 1:     printf("Second day shift\n");
+        case 1:     printf("\nSecond day shift\n");
                     break;
-        case 2:     printf("First night shift\n");
+        case 2:     printf("\nFirst night shift\n");
                     break;
-        case 3:     printf("Second night shift\n");
+        case 3:     printf("\nSecond night shift\n");
                     break;
-        case 4:     printf("First off day\n");
+        case 4:     printf("\nFirst off day\n");
                     break;
-        case 5:     printf("Second off day\n");
+        case 5:     printf("\nSecond off day\n");
                     break;
-        case 6:     printf("Third off day");
+        case 6:     printf("\nThird off day");
                     break;
-        case 7:     printf("forth off day");
+        case 7:     printf("\nforth off day");
                     break;
     }
 }
