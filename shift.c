@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // function prototypes
 int get_day_of_year(int day, int month, int year, int calendar[], int *year_total);
@@ -8,7 +9,7 @@ int main(void) {
     int calendar[12] = {31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}; 
     int day, month, year, ref_year, year_total, ref_year_total, days_since_ref, ref_day_of_year, sched;
 
-    printf("Enter a reference date (first day shift of a cycle): ");
+    printf("Enter first day shift of current cycle (dd/mm/yy): ");
     scanf("%d/%d/%d", &day, &month, &ref_year);
     ref_day_of_year = get_day_of_year(day, month, ref_year, calendar, &ref_year_total);
 
@@ -20,8 +21,8 @@ int main(void) {
     } else {
         days_since_ref = (ref_year_total - ref_day_of_year) + get_day_of_year(day, month, year, calendar, &year_total);
     }
+    
     sched = days_since_ref % 8;
-
     switch (sched) {
         case 0:     printf("First day shift\n");
                     break;
@@ -49,6 +50,13 @@ int get_day_of_year(int day, int month, int year, int calendar[], int *year_tota
 
     int i, day_of_year;
 
+    // garbage in, garbage out
+    if (day == 0 || month == 0) {
+        printf("Invalid date.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // check leap year
     if (year % 24 == 0) {
         *year_total = 366;
         calendar[1] = 29;
