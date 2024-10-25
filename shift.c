@@ -74,7 +74,7 @@ void view_month(int ref_year, int ref_day_of_year, int ref_year_total, int calen
             }
         }
 
-        printf("\nView following month, Return or Quit?\n(V/R/Q): ");
+        printf("\n\nView following month, Return or Quit?\n(V/R/Q): ");
         while ((c = toupper(getchar())) != 'V' && c != 'R' && c != 'Q');
 
         if (c == 'V') {
