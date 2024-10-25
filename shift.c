@@ -4,8 +4,8 @@
 
 // function prototypes
 int get_day_of_year(int day, int month, int year, int calendar[], int *year_total);
-void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[]);
-void view_month(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[], int ref_day_name);
+void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[], int ref_day_of_week);
+void view_month(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[], int ref_day_of_week);
 
 int main(void) {
 
@@ -24,7 +24,7 @@ int main(void) {
 
         printf("\nCheck date, View month or Quit?\n(C/V/Q): ");
         while ((c = toupper(getchar())) != 'C' && c != 'Q' && c != 'V');
-        if (c == 'C')   check_date(year, day_of_year, year_total, calendar);
+        if (c == 'C')   check_date(year, day_of_year, year_total, calendar, day_of_week - 1);
         if (c == 'V')   view_month(year, day_of_year, year_total, calendar, day_of_week - 1);
         if (c == 'Q')   break;
     }
@@ -40,31 +40,31 @@ void view_month(int ref_year, int ref_day_of_year, int ref_year_total, int calen
     scanf("%d/%d", &month, &year);
 
     for (;;) {
-    if (ref_year == year) {
-        days_since_ref = get_day_of_year(day, month, year, calendar, &year_total) - ref_day_of_year;
-    } else {
-        days_since_ref = (ref_year_total - ref_day_of_year) + get_day_of_year(day, month, year, calendar, &year_total);
-    }
-    int calendar_month[calendar[month - 1]];
-    
-    day_of_week = (days_since_ref - ref_day_of_week) % 7;
+        if (ref_year == year) {
+            days_since_ref = get_day_of_year(day, month, year, calendar, &year_total) - ref_day_of_year;
+        } else {
+            days_since_ref = (ref_year_total - ref_day_of_year) + get_day_of_year(day, month, year, calendar, &year_total);
+        }
+        int calendar_month[calendar[month - 1]];
+        
+        day_of_week = (days_since_ref - ref_day_of_week) % 7;
 
         printf("\n%d/%d\n", month, year);
         printf(" Sun   Mon   Tue   Wed   Thu   Fri   Sat\n");
-    for (i = 0; i < calendar[month - 1] + day_of_week; i++) {
-        if (i < day_of_week) {
-            printf("      ");
-        } else {
-            calendar_month[i - day_of_week] = i + 1 - day_of_week;
-            sched = days_since_ref++ % 8;
-            printf("%2d.%-3c", calendar_month[i - day_of_week], shift_pattern[sched]);
+        for (i = 0; i < calendar[month - 1] + day_of_week; i++) {
+            if (i < day_of_week) {
+                printf("      ");
+            } else {
+                calendar_month[i - day_of_week] = i + 1 - day_of_week;
+                sched = days_since_ref++ % 8;
+                printf("%2d.%-3c", calendar_month[i - day_of_week], shift_pattern[sched]);
+            }
+            if (i == 6) {
+                printf("\n");
+            } else if (i > 7 && (i + 1) % 7 == 0) {
+                printf("\n");
+            }
         }
-        if (i == 6) {
-            printf("\n");
-        } else if (i > 7 && (i + 1) % 7 == 0) {
-            printf("\n");
-        }
-    }
 
         printf("\nView following month, Return or Quit?\n(V/R/Q): ");
         while ((c = toupper(getchar())) != 'V' && c != 'R' && c != 'Q');
@@ -85,9 +85,9 @@ void view_month(int ref_year, int ref_day_of_year, int ref_year_total, int calen
     
 }
 
-void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[]) {
+void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calendar[], int ref_day_of_week) {
 
-    int day, month, year, year_total, days_since_ref, sched;
+    int day, month, year, year_total, days_since_ref, sched, day_of_week;
 
     printf("Enter a future date (dd/mm/yy):    ");
     scanf("%d/%d/%d", &day, &month, &year);
@@ -115,24 +115,24 @@ void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calen
         case 6:     printf("\nSaturday, ");
                     break;
     }
-    
+
     sched = days_since_ref % 8;
     switch (sched) {
-        case 0:     printf("\nFirst day shift\n");
+        case 0:     printf("First day shift\n");
                     break;
-        case 1:     printf("\nSecond day shift\n");
+        case 1:     printf("Second day shift\n");
                     break;
-        case 2:     printf("\nFirst night shift\n");
+        case 2:     printf("First night shift\n");
                     break;
-        case 3:     printf("\nSecond night shift\n");
+        case 3:     printf("Second night shift\n");
                     break;
-        case 4:     printf("\nFirst off day\n");
+        case 4:     printf("First off day\n");
                     break;
-        case 5:     printf("\nSecond off day\n");
+        case 5:     printf("Second off day\n");
                     break;
-        case 6:     printf("\nThird off day");
+        case 6:     printf("Third off day");
                     break;
-        case 7:     printf("\nforth off day");
+        case 7:     printf("forth off day");
                     break;
     }
 }
