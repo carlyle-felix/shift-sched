@@ -78,6 +78,24 @@ void check_date(int ref_year, int ref_day_of_year, int ref_year_total, int calen
     } else {
         days_since_ref = (ref_year_total - ref_day_of_year) + get_day_of_year(day, month, year, calendar, &year_total);
     }
+
+    day_of_week = (days_since_ref - ref_day_of_week) % 7;
+    switch (day_of_week) {
+        case 0:     printf("\nSunday, ");
+                    break;
+        case 1:     printf("\nMonday, ");
+                    break;
+        case 2:     printf("\nTuesday, ");
+                    break;
+        case 3:     printf("\nWednesday, ");
+                    break;
+        case 4:     printf("\nThursday, ");
+                    break;
+        case 5:     printf("\nFriday, ");
+                    break;
+        case 6:     printf("\nSaturday, ");
+                    break;
+    }
     
     sched = days_since_ref % 8;
     switch (sched) {
